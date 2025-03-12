@@ -1,5 +1,5 @@
 // Time Complexity : O(1) for all operations.
-// Space Complexity : O(B+N) = O(n) B:buckets, N:BucketList   
+// Space Complexity : O(B+N) = O(1) B:buckets, N:BucketList   size of B and N are know so its constant TC.
 // Did this code successfully run on Leetcode : Yes
 // Any problem you faced while coding this : NO
 
