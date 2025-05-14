@@ -1,62 +1,60 @@
 // Time Complexity : O(1) for all operations.
-// Space Complexity : O(B+N) = O(1) B:buckets, N:BucketList   size of B and N are know so its constant TC.
-// Did this code successfully run on Leetcode : Yes
-// Any problem you faced while coding this : NO
+// Space Complexity : O(n+m) n:size of bucket & m:size of bucketElements.
+// Did this code successfully run on Leetcode :  Yes
+// Any problem you faced while coding this :  No
 
 
 // Your code here along with comments explaining your approach
-// I used 2D array for this problem as the range of keys is 10^6 so we can distribute max. 1000 elements in each bucket. By applying Double hahsing technique i will place each key into our bucketList i.e column of the 2D array.
+//I am implementing this using a 2D array where we can max distribute 1000 elements in each of  the buckets. By acquiring double hashing technique i will note the presence of each number in my index using true/false.
 
 class MyHashSet {
-    int buckets = 1000;
-    int bucketList = 1000;
-    boolean arr[][] = new boolean[buckets][];
+    int size = 1000;
+    boolean arr[][] = new boolean[size][];
+public MyHashSet() {
+   
+}
 
-    public MyHashSet() {
-    }
+private int hash_1(int key){
+    return key%1000;
+}
+
+private int hash_2(int key){
+    return key/1000;
+}
+
+public void add(int key) {
+    int indexP = hash_1(key);
+    int indexS = hash_2(key);
     
-    public int primaryIndex(int key){
-        return key%1000;
+    if(arr[indexP] == null){
+        arr[indexP] = new boolean[size+1];
     }
+ arr[indexP][indexS] = true;
+}
 
-    public int secondaryIndex(int key){
-        return key/1000;
-    }
+public void remove(int key) {
+    int indexP = hash_1(key);
+    int indexS = hash_2(key);
 
-    public void add(int key) {
-        int primaryIndex = primaryIndex(key);
-        int secondaryIndex = secondaryIndex(key);
+    if(arr[indexP] == null) return;
 
-        if(arr[primaryIndex] == null){
-            arr[primaryIndex] = new boolean[bucketList + 1]; 
-        }
+    arr[indexP][indexS] = false;
+}
 
-        arr[primaryIndex][secondaryIndex] = true;
+public boolean contains(int key) {
+    int indexP = hash_1(key);
+    int indexS = hash_2(key);
 
-    }
-    
-    public void remove(int key) {
-        
-        int primaryIndex = primaryIndex(key);
-        int secondaryIndex = secondaryIndex(key);
+    if(arr[indexP] == null) return false;
 
-        if(arr[primaryIndex] == null) return;
-        arr[primaryIndex][secondaryIndex] = false;
-    }
-    
-    public boolean contains(int key) {
-        
-        int primaryIndex = primaryIndex(key);
-        int secondaryIndex = secondaryIndex(key);
-
-     return arr[primaryIndex] != null && arr[primaryIndex][secondaryIndex];
-    }
+  return arr[indexP][indexS];
+}
 }
 
 /**
- * Your MyHashSet object will be instantiated and called as such:
- * MyHashSet obj = new MyHashSet();
- * obj.add(key);
- * obj.remove(key);
- * boolean param_3 = obj.contains(key);
- */
+* Your MyHashSet object will be instantiated and called as such:
+* MyHashSet obj = new MyHashSet();
+* obj.add(key);
+* obj.remove(key);
+* boolean param_3 = obj.contains(key);
+*/
